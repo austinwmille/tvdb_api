@@ -700,7 +700,8 @@ class Tvdb:
                 include_get_headers=True,
             )
             self.session.cache.create_key = types.MethodType(create_key, self.session.cache)
-            self.session.remove_expired_responses()
+            if hasattr(self.session, "remove_expired_responses"):
+                self.session.remove_expired_responses()
             self.config['cache_enabled'] = True
         elif cache is False:
             LOG.debug("Caching disabled")
@@ -716,7 +717,8 @@ class Tvdb:
                 include_get_headers=True,
             )
             self.session.cache.create_key = types.MethodType(create_key, self.session.cache)
-            self.session.remove_expired_responses()
+            if hasattr(self.session, "remove_expired_responses"):
+                self.session.remove_expired_responses()
         else:
             LOG.debug("Using specified requests.Session")
             self.session = cache
